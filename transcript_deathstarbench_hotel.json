@@ -1,0 +1,133 @@
+{
+  "nodes": [
+    {
+      "name": "CheckUser",
+      "service": "User",
+      "action": {
+        "type": "rpc",
+        "args": []
+      }
+    },
+    {
+      "name": "Nearby",
+      "service": "Search",
+      "action": {
+        "type": "external rpc",
+        "args": [
+          "Geo.Nearby"
+        ]
+      }
+    },
+    {
+      "name": "MakeReservation",
+      "service": "Reservation",
+      "action": {
+        "type": "rpc",
+        "args": []
+      }
+    },
+    {
+      "name": "CheckAvailability",
+      "service": "Reservation",
+      "action": {
+        "type": "rpc",
+        "args": []
+      }
+    },
+    {
+      "name": "GetRecommendations",
+      "service": "Recommendation",
+      "action": {
+        "type": "rpc",
+        "args": []
+      }
+    },
+    {
+      "name": "GetRates",
+      "service": "Rate",
+      "action": {
+        "type": "rpc",
+        "args": []
+      }
+    },
+    {
+      "name": "GetProfiles",
+      "service": "Profile",
+      "action": {
+        "type": "rpc",
+        "args": []
+      }
+    },
+    {
+      "name": "Nearby",
+      "service": "Geo",
+      "action": {
+        "type": "rpc",
+        "args": []
+      }
+    },
+    {
+      "name": "searchHandler",
+      "service": "Frontend",
+      "action": {
+        "type": "seq",
+        "args": [
+          {
+            "type": "external rpc",
+            "args": ["Search.Nearby"]
+          },
+          {
+            "type": "external rpc",
+            "args": ["Reservation.CheckAvailability"]
+          },
+          {
+            "type": "external rpc",
+            "args": ["Profile.GetProfiles"]
+          }
+        ]
+      }
+    },
+    {
+      "name": "recommendHandler",
+      "service": "Frontend",
+      "action": {
+        "type": "seq",
+        "args": [
+          {
+            "type": "external rpc",
+            "args": ["Recommendation.GetRecommendations"]
+          },
+          {
+            "type": "external rpc",
+            "args": ["Profile.GetProfiles"]
+          }
+        ]
+      }
+    },
+    {
+      "name": "userHandler",
+      "service": "Frontend",
+      "action": {
+        "type": "external rpc",
+        "args": ["User.CheckUser"]
+      }
+    },
+    {
+      "name": "reservationHandler",
+      "service": "Frontend",
+      "action": {
+        "type": "seq",
+        "args": [
+          {
+            "type": "external rpc",
+            "args": ["User.CheckUser"]
+          },
+          {
+            "type": "external rpc",
+            "args": ["Reservation.MakeReservation"]
+          }
+        ]
+      }
+    }
+  ]
+}

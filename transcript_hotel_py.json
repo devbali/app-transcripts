@@ -1,0 +1,75 @@
+{
+    "nodes": [
+        {
+            "name": "reserve_flight",
+            "service": "Flight",
+            "action": {
+                "type": "rpc",
+                "args": []
+            },
+            "annotations": []
+        },
+        {
+            "name": "add_flight",
+            "service": "Flight",
+            "action": {
+                "type": "rpc",
+                "args": []
+            },
+            "annotations": []
+        },
+        {
+            "name": "req",
+            "service": "Frontend",
+            "action": {
+                "type": "seq",
+                "args": [
+                    {
+                        "type": "max",
+                        "args": [
+                            {
+                                "type": "external rpc",
+                                "args": ["Hotel.reserve_hotel"]
+                            },
+                            {
+                                "type": "external rpc",
+                                "args": ["Flight.add_flight"]
+                            }
+                            
+                        ]
+                    },
+                    {
+                        "type": "external rpc",
+                        "args": [
+                            "Order.place_order"
+                        ]
+                    }
+                    
+                ]
+            },
+            "annotations": []
+        },
+        {
+            "name": "reserve_hotel",
+            "service": "Hotel",
+            "action": {
+                "type": "rpc"
+            },
+            "annotations": []
+        },
+        {
+            "name": "add_hotel",
+            "service": "Hotel",
+            "action": {
+                "type": "rpc"
+            }
+        },
+        {
+            "name": "place_order",
+            "service": "Order",
+            "action": {
+                "type": "rpc"
+            }
+        }
+    ]
+}
